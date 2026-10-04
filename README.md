@@ -10,29 +10,33 @@ Sistema de gerenciamento de entregas com autenticação e cadastro de mercadoria
 ## 🚀 Como Executar
 
 ### 1. Compilar o projeto
+
 ```bash
 mvn clean package
 ```
 
 ### 2. Configurar variáveis de ambiente
 
-Crie um arquivo `.env` na raiz do projeto com suas credenciais:
+Crie um arquivo `.env` na raiz do projeto:
+
+```bash
 DB_USER=seu_usuario
 DB_PASSWORD=sua_senha
-
+```
 
 ### 3. Executar a aplicação
+
 ```bash
 java -jar target/projeto-entregas-1.0.0.jar
 ```
 
 ## 📦 Arquitetura
 
-O projeto segue uma arquitetura em **3 camadas**:
+O projeto segue uma arquitetura em 3 camadas:
 
-- **Model** (`br.edu.entregas.model`): Entidades de domínio (Mercadoria, Endereco)
-- **Repository** (`br.edu.entregas.repository`): Acesso a dados
-- **Service** (`br.edu.entregas.service`): Lógica de negócio (LoginService, EntregaService)
+- **Model**: Entidades de domínio (Mercadoria, Endereco)
+- **Repository**: Acesso a dados
+- **Service**: Lógica de negócio (LoginService, EntregaService)
 
 ## 🎯 Funcionalidades
 
@@ -43,23 +47,23 @@ O projeto segue uma arquitetura em **3 camadas**:
 
 ## 📁 Estrutura do Projeto
 
+```
 src/main/java/br/edu/entregas/
-├── Main.java # Ponto de entrada
+├── Main.java
 ├── model/
-│ ├── Mercadoria.java # Entidade de mercadoria
-│ └── Endereco.java # Record de endereço
+│ ├── Mercadoria.java
+│ └── Endereco.java
 ├── service/
-│ ├── LoginService.java # Autenticação
-│ └── EntregaService.java # Lógica de entregas
+│ ├── LoginService.java
+│ └── EntregaService.java
 ├── repository/
-│ └── MercadoriaRepository.java # Persistência em memória
+│ └── MercadoriaRepository.java
 └── util/
-└── Validador.java # Utilitários de validação
-
+└── Validador.java
+```
 
 ## 🧪 Exemplo de Uso
 
-O sistema aguarda entrada de dados para:
 1. Autenticar usuário (configure as credenciais no `.env`)
 2. Cadastrar uma mercadoria com endereço de entrega
 3. Listar as mercadorias cadastradas
@@ -68,4 +72,4 @@ O sistema aguarda entrada de dados para:
 
 - Dados são armazenados em memória (não persistem)
 - O endereço de entrega é obrigatório no cadastro
-- **Segurança:** Nunca commite credenciais no repositório — use o arquivo `.env` que está no `.gitignore`
+- **Segurança**: Nunca commite credenciais — use `.env` no `.gitignore`
