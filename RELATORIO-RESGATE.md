@@ -1,3 +1,4 @@
+```markdown
 # Relatório de Resgate
 
 - **Equipe:** Gabriel Naoki (Resgate), Caio Abreu (Investigador Git), Wyllian Mariano (Responsável Técnico), Cassiano Abreu (Relator/Apresentador)
@@ -23,10 +24,14 @@
    - `Validador.java` foi deletado indevidamente
    - Localizado via `git log --all --diff-filter=D`
 
-4. **Credenciais expostas (application.properties)**
-   - `db.password=SuperSenha123`
-   - `api.token=TOKEN-NAO-DEVERIA-ESTAR-NO-GIT`
+4. **Credenciais expostas (application.properties e código-fonte)**
+   - `db.password=SuperSenha123` (application.properties)
+   - `api.token=TOKEN-NAO-DEVERIA-ESTAR-NO-GIT` (application.properties)
+   - `private static final String USUARIO = "admin";` (LoginService.java)
+   - `private static final String SENHA = "12345678";` (LoginService.java)
+   - Credenciais hardcoded no código-fonte
    - Adicionadas no commit `6572d8a` (tag: commit-perigoso)
+   - **Risco crítico de segurança:** Credenciais versionadas no Git
 
 5. **README inadequado**
    - Conteúdo: "Sistema interno. Pergunte ao desenvolvedor como executar."
@@ -56,6 +61,50 @@
 | f07fc11 | fix: corrigir lógica de autenticação no LoginService | Trocou `\|\|` por `&&`, usou `.equals()` para String |
 | 2ce0609 | docs: melhorar README com instruções de execução | Adicionou requisitos, instruções de compilação/execução, arquitetura e funcionalidades |
 | 4a28837 | security: remover credenciais expostas do arquivo de configuração | Removeu senha e token de `application.properties` |
+| 592f48a | fix: ler credenciais de variáveis de ambiente | Implementou segurança com .env e dotenv-java, removeu credenciais hardcoded do LoginService |
+
+## Solução de Segurança - Variáveis de Ambiente
+
+### Problema
+Credenciais hardcoded em dois lugares:
+- `application.properties` (credenciais de banco)
+- `LoginService.java` (credenciais de login)
+
+### Implementação
+1. **Criado `.env`** - Arquivo local com credenciais reais (não versionado)
+   ```
+   DB_USER=admin
+   DB_PASSWORD=12345678
+   ```
+
+2. **Criado `.env.example`** - Template para configuração
+   ```
+   DB_USER=seu_usuario
+   DB_PASSWORD=sua_senha
+   ```
+
+3. **Adicionado ao `.gitignore`** - Protege dados sensíveis
+   ```
+   .env
+   ```
+
+4. **Modificado `LoginService.java`** - Lê de variáveis de ambiente
+   ```java
+   import io.github.cdimascio.dotenv.Dotenv;
+   
+   private static final Dotenv dotenv = Dotenv.load();
+   private static final String USUARIO = dotenv.get("DB_USER", "admin");
+   private static final String SENHA = dotenv.get("DB_PASSWORD", "12345678");
+   ```
+
+5. **Adicionada dependência no `pom.xml`**
+   ```xml
+   <dependency>
+       <groupId>io.github.cdimascio</groupId>
+       <artifactId>dotenv-java</artifactId>
+       <version>3.0.0</version>
+   </dependency>
+   ```
 
 ## Validação final
 
@@ -80,10 +129,14 @@ mvn clean package → BUILD SUCCESS
 - Explica como compilar e executar
 - Descreve arquitetura em 3 camadas
 - Lista funcionalidades e estrutura do projeto
+- Instruções de variáveis de ambiente
 
 ### ✅ Segurança
 - `application.properties` contém apenas configurações públicas
-- Credenciais removidas do arquivo
+- Credenciais removidas do arquivo e do código-fonte
+- `.env` não é versionado (protegido por `.gitignore`)
+- `LoginService.java` lê credenciais de variáveis de ambiente
 - Histórico mantém registro para auditoria (commit `6572d8a` ainda acessível)
 
 **Status Final:** 🎉 ESCAPE ROOM COMPLETO - Projeto pronto para entrega!
+```
