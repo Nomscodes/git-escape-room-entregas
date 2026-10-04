@@ -2,3 +2,5 @@ target/
 *.class
 .idea/
 .vscode/
+.env
+config/application.properties
