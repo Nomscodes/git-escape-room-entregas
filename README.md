@@ -1,75 +1,23 @@
 # Projeto Entregas
 
-Sistema de gerenciamento de entregas com autenticação e cadastro de mercadorias.
+Sistema Java de console para controle de mercadorias e seus endereços de entrega.
 
-## 📋 Requisitos
+## Requisitos
+- Java 17 ou superior
+- Maven 3.8 ou superior
 
-- Java 17+
-- Maven 3.6+
-
-## 🚀 Como Executar
-
-### 1. Compilar o projeto
-
+## Compilar e executar
 ```bash
 mvn clean package
+java -cp target/classes br.edu.entregas.Main
 ```
 
-### 2. Configurar variáveis de ambiente
+## Acesso de demonstração
+- Usuário: `admin`
+- Senha: `12345678`
 
-Crie um arquivo `.env` na raiz do projeto:
+## Modelo
+Cada mercadoria possui exatamente um endereço de entrega.
 
-```bash
-DB_USER=seu_usuario
-DB_PASSWORD=sua_senha
-```
-
-### 3. Executar a aplicação
-
-```bash
-java -jar target/projeto-entregas-1.0.0.jar
-```
-
-## 📦 Arquitetura
-
-O projeto segue uma arquitetura em 3 camadas:
-
-- **Model**: Entidades de domínio (Mercadoria, Endereco)
-- **Repository**: Acesso a dados
-- **Service**: Lógica de negócio (LoginService, EntregaService)
-
-## 🎯 Funcionalidades
-
-- ✅ Autenticação de usuário
-- ✅ Cadastro de mercadorias com endereço
-- ✅ Listagem de entregas
-- ✅ Validação de dados obrigatórios
-
-## 📁 Estrutura do Projeto
-
-```
-src/main/java/br/edu/entregas/
-├── Main.java
-├── model/
-│ ├── Mercadoria.java
-│ └── Endereco.java
-├── service/
-│ ├── LoginService.java
-│ └── EntregaService.java
-├── repository/
-│ └── MercadoriaRepository.java
-└── util/
-└── Validador.java
-```
-
-## 🧪 Exemplo de Uso
-
-1. Autenticar usuário (configure as credenciais no `.env`)
-2. Cadastrar uma mercadoria com endereço de entrega
-3. Listar as mercadorias cadastradas
-
-## 📝 Notas
-
-- Dados são armazenados em memória (não persistem)
-- O endereço de entrega é obrigatório no cadastro
-- **Segurança**: Nunca commite credenciais — use `.env` no `.gitignore`
+## Fluxo recomendado
+Use branches de funcionalidade, Pull Request e revisão antes do merge.
