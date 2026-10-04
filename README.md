@@ -14,15 +14,17 @@ Sistema de gerenciamento de entregas com autenticação e cadastro de mercadoria
 mvn clean package
 ```
 
-### 2. Executar a aplicação
+### 2. Configurar variáveis de ambiente
+
+Crie um arquivo `.env` na raiz do projeto com suas credenciais:
+DB_USER=seu_usuario
+DB_PASSWORD=sua_senha
+
+
+### 3. Executar a aplicação
 ```bash
 java -jar target/projeto-entregas-1.0.0.jar
 ```
-
-## 🔐 Credenciais Padrão
-
-- **Usuário:** admin
-- **Senha:** 12345678
 
 ## 📦 Arquitetura
 
@@ -54,10 +56,11 @@ src/main/java/br/edu/entregas/
 └── util/
 └── Validador.java # Utilitários de validação
 
+
 ## 🧪 Exemplo de Uso
 
 O sistema aguarda entrada de dados para:
-1. Autenticar usuário (admin/12345678)
+1. Autenticar usuário (configure as credenciais no `.env`)
 2. Cadastrar uma mercadoria com endereço de entrega
 3. Listar as mercadorias cadastradas
 
@@ -65,3 +68,4 @@ O sistema aguarda entrada de dados para:
 
 - Dados são armazenados em memória (não persistem)
 - O endereço de entrega é obrigatório no cadastro
+- **Segurança:** Nunca commite credenciais no repositório — use o arquivo `.env` que está no `.gitignore`
